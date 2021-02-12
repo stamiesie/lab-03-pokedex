@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import pokeData from './data.js';
 
 export default class SearchPage extends Component {
     render() {
