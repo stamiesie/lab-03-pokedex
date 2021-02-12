@@ -1,7 +1,7 @@
 ##
--Setup file tree
+-Setup file tree X
 -import data to data.js
-setup react-router dom on home page with links to search and home
+setup react-router dom on home page with links to search and home X
 
 --build react components to render pokemon:
     --pokeList

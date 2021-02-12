@@ -5,9 +5,9 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Header from 'header.js';
-import HomePage from 'HomePage.js';
-import SearchPage from 'SearchPage.js';
+import Header from './header.js';
+import HomePage from './HomePage.js';
+import SearchPage from './SearchPage.js';
 
 
 
