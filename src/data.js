@@ -1,4 +1,5 @@
-const pokeData = [
+// eslint-disable-next-line import/no-anonymous-default-export
+export default [
     {
         '_id': '5cef3501ef6005a77cd4fd17',
         'pokemon': 'bulbasaur',
@@ -463,4 +464,4 @@ const pokeData = [
     }
 ]
 
-export default pokeData;
+

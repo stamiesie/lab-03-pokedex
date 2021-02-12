@@ -1,1 +1,10 @@
+.poke-image-container {
+    border: 1px solid black;
+    width: 200px;
+}
 
+
+.poke-image {
+    height: 150px;
+    border: 1px solid black;
+}
