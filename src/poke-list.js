@@ -4,7 +4,7 @@ import PokeItem from './poke-item.js';
 export default class PokeList extends Component {
     render() {
         return (
-            <div>
+            <div className="poke-list">
                 {this.props.pokeData.map(pokeObj =>
                     <PokeItem
                         key={pokeObj._id}

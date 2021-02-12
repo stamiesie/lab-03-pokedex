@@ -36,7 +36,6 @@ export default class SearchPage extends Component {
         });
     }
 
-
     render() {
         // sort
         if (this.state.sortOrder === 'ascending') {
@@ -53,30 +52,35 @@ export default class SearchPage extends Component {
 
 
         return (
-            <div>
-                <h1>Search Page!</h1>
-                <SearchBar
-                    handleChange={this.handleSearchChange}
-                    sortBy={this.state.sortBy}
-                />
-
-                <div className="dropdown">
-                    <Dropdown
-                        // pokemon sorter
-                        currentValue={this.state.sortBy}
-                        handleChange={this.handleSortBy}
-                        options={['pokemon', 'shape', 'ability_1', 'type_1']}
-                    />
+            <div className="search-page">
+                {/* <h1>Search the Pokedex</h1> */}
+                <div className="side-bar">
+                    <div className="search-bar">
+                        <SearchBar
+                            handleChange={this.handleSearchChange}
+                            sortBy={this.state.sortBy}
+                        />
+                    </div>
+                    <div className="dropdown">
+                        <Dropdown
+                            // pokemon sorter
+                            currentValue={this.state.sortBy}
+                            handleChange={this.handleSortBy}
+                            options={['pokemon', 'shape', 'ability_1', 'type_1']}
+                        />
+                    </div>
+                    <div className="dropdown">
+                        <Dropdown
+                            // sorting direction
+                            currentValue={this.state.sortOrder}
+                            handleChange={this.handleSortOrder}
+                            options={['ascending', 'descending']}
+                        />
+                    </div>
                 </div>
-                <div className="dropdown">
-                    <Dropdown
-                        // sorting direction
-                        currentValue={this.state.sortOrder}
-                        handleChange={this.handleSortOrder}
-                        options={['ascending', 'descending']}
-                    />
+                <div>
+                    <PokeList pokeData={filteredPoke} />
                 </div>
-                <PokeList pokeData={filteredPoke} />
             </div>
         )
     }
