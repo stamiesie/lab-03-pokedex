@@ -13,7 +13,6 @@ export default class PokeList extends Component {
                         shape={pokeObj.shape}
                         ability_1={pokeObj.ability_1}
                         type_1={pokeObj.type_1}
-                        speed={pokeObj.speed}
                     />
                 )}
             </div>

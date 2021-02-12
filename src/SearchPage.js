@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import pokeData from "./data.js";
 import PokeList from './poke-list.js';
 import Dropdown from './dropdown.js';
+import SearchBar from './Search-bar.js';
 
 export default class SearchPage extends Component {
     state = {
         pokemon: pokeData,
         sortBy: 'pokemon',
         sortOrder: 'ascending',
+        search: '',
     }
 
     handleSortBy = (e) => {
@@ -24,31 +26,40 @@ export default class SearchPage extends Component {
         });
     }
 
-    // handleSearchChange = (e) => {
-    //     this.setState({
-    //         search:
-    //             e.target.value
-    //     });
-    // }
+    handleSearchChange = (e) => {
+        // needed for form
+        e.preventDefault();
+        this.setState({
+            search:
+                // target with input name 'search'
+                e.target.search.value
+        });
+    }
 
 
     render() {
         // sort
         if (this.state.sortOrder === 'ascending') {
             this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
-            console.log(pokeData);
         }
 
         if (this.state.sortOrder === 'descending') {
             this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy]))
         }
 
-        // filter for search bar here
+        // filter for search input
+        const filteredPoke = this.state.pokemon.filter(pokeObj => pokeObj.pokemon.includes(this.state.search));
+        console.log(filteredPoke);
+
 
         return (
             <div>
                 <h1>Search Page!</h1>
-                {/* <input onChange={this.handleSearchChange}/> */}
+                <SearchBar
+                    handleChange={this.handleSearchChange}
+                    sortBy={this.state.sortBy}
+                />
+
                 <div className="dropdown">
                     <Dropdown
                         // pokemon sorter
@@ -65,7 +76,7 @@ export default class SearchPage extends Component {
                         options={['ascending', 'descending']}
                     />
                 </div>
-                <PokeList pokeData={pokeData} />
+                <PokeList pokeData={filteredPoke} />
             </div>
         )
     }

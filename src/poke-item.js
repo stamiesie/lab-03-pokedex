@@ -9,7 +9,6 @@ export default class PokeItem extends Component {
                 <p>Shape: {this.props.shape}</p>
                 <p>Ability: {this.props.ability_1}</p>
                 <p>Type: {this.props.type_1}</p>
-                <p>Speed: {this.props.speed}</p>
             </div>
         )
     }
