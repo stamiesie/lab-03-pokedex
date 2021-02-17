@@ -5,24 +5,30 @@ import PokeList from './poke-list.js';
 import Dropdown from './dropdown.js';
 import SearchBar from './Search-bar.js';
 
+
 export default class SearchPage extends Component {
     state = {
         pokemon: [],
         sortBy: 'pokemon',
-        sortOrder: 'asc',
+        sortOrder: 'ascending',
         search: '',
+        loading: false,
     }
     // on load, show all pokemon
     componentDidMount = async () => {
         await this.fetchPokemon();
-        // console.log(this.state.pokemon);
     }
 
     // get data from API for the state categories to sort and filter
     fetchPokemon = async () => {
+        // loading state set to true to turn on
+        this.setState({ loading: true })
+
         const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.search}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}`);
 
         this.setState({
+            // loading state set back to false to turn off
+            loading: false,
             pokemon: data.body.results
         });
     }
