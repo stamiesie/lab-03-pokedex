@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PokeItem from './poke-item.js';
-import Spinner from './loading-spinner.js';
+import Loading from './loading-spinner.js';
 
 export default class PokeList extends Component {
     render() {
         return (
             <div className="poke-list">
-                {this.props.loading ? <Spinner /> : this.props.pokeData.map(pokeObj =>
+                {this.props.loading ? <Loading /> : this.props.pokeData.map(pokeObj =>
                     <PokeItem
                         key={pokeObj._id}
                         pokeImage={pokeObj.url_image}

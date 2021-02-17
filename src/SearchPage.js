@@ -107,7 +107,7 @@ export default class SearchPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <PokeList pokeData={this.state.pokemon} />
+                    <PokeList pokeData={this.state.pokemon} loading={this.state.loading} />
                 </div>
             </div>
         )
