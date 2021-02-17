@@ -5,8 +5,9 @@ export default class HomePage extends Component {
         return (
             <div>
                 <div className="home-message">
-                    <h1>Welcome!</h1>
-                    <h2>Use the search link above to get started!</h2>
+                    {/* <h1>Welcome!</h1>
+                    <h2>Use the search link above to get started!</h2> */}
+                    <img className="home-background" alt="pokemon" src="pokedex_3.jpg" />
                 </div>
             </div>
         )
