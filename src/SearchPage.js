@@ -84,12 +84,14 @@ export default class SearchPage extends Component {
             <div className="search-page">
                 <div className="side-bar">
                     <div className="search-bar">
+                        <p className="search-title">Search Pokemon by name:</p>
                         <SearchBar
                             handleChange={this.handleSearchChange}
                             sortBy={this.state.sortBy}
                         />
                     </div>
                     <div className="dropdown">
+                        <p>Search by:</p>
                         <Dropdown
                             // pokemon sorter
                             currentValue={this.state.sortBy}
@@ -98,6 +100,7 @@ export default class SearchPage extends Component {
                         />
                     </div>
                     <div className="dropdown">
+                        <p>Sort Order:</p>
                         <Dropdown
                             // sorting direction
                             currentValue={this.state.sortOrder}
