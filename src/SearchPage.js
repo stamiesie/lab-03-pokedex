@@ -1,59 +1,87 @@
 import React, { Component } from 'react'
-import pokeData from "./data.js";
+import request from 'superagent';
+// import pokeData from "./data.js";
 import PokeList from './poke-list.js';
 import Dropdown from './dropdown.js';
 import SearchBar from './Search-bar.js';
 
+
 export default class SearchPage extends Component {
     state = {
-        pokemon: pokeData,
+        pokemon: [],
         sortBy: 'pokemon',
         sortOrder: 'ascending',
         search: '',
+        loading: false,
+    }
+    // on load, show all pokemon
+    componentDidMount = async () => {
+        await this.fetchPokemon();
     }
 
-    handleSortBy = (e) => {
+    // get data from API for the state categories to sort and filter
+    fetchPokemon = async () => {
+        // loading state set to true to turn on
+        this.setState({ loading: true })
+
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.search}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}`);
+
         this.setState({
+            // loading state set back to false to turn off
+            loading: false,
+            pokemon: data.body.results
+        });
+    }
+
+    // await before state to avoid double clicks on button and drop downs
+
+    handleSortBy = async (e) => {
+        await this.setState({
             sortBy:
                 e.target.value
         });
+        // call function to get API data
+        await this.fetchPokemon();
     }
 
-    handleSortOrder = (e) => {
-        this.setState({
+    handleSortOrder = async (e) => {
+        await this.setState({
             sortOrder:
                 e.target.value
         });
+        // call function to get API data
+        await this.fetchPokemon();
     }
 
-    handleSearchChange = (e) => {
+    handleSearchChange = async (e) => {
         // needed for form
         e.preventDefault();
-        this.setState({
+        await this.setState({
             search:
                 // target with input name 'search'
                 e.target.search.value
         });
+        // call function to get API data
+        await this.fetchPokemon();
     }
 
     render() {
-        // sort
-        if (this.state.sortOrder === 'ascending') {
-            this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
-        }
+        // // sort
+        // if (this.state.sortOrder === 'ascending') {
+        //     this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
+        // }
 
-        if (this.state.sortOrder === 'descending') {
-            this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy]))
-        }
+        // if (this.state.sortOrder === 'descending') {
+        //     this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy]))
+        // }
 
-        // filter for search input
-        const filteredPoke = this.state.pokemon.filter(pokeObj => pokeObj.pokemon.includes(this.state.search));
-        console.log(filteredPoke);
+        // // filter for search input
+        // const filteredPoke = this.state.pokemon.filter(pokeObj => pokeObj.pokemon.includes(this.state.search));
+        // console.log(filteredPoke);
 
 
         return (
             <div className="search-page">
-                {/* <h1>Search the Pokedex</h1> */}
                 <div className="side-bar">
                     <div className="search-bar">
                         <SearchBar
@@ -79,7 +107,7 @@ export default class SearchPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <PokeList pokeData={filteredPoke} />
+                    <PokeList pokeData={this.state.pokemon} />
                 </div>
             </div>
         )
