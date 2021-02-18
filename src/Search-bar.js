@@ -6,7 +6,7 @@ export default class SearchBar extends Component {
             <div className="form">
                 <form onSubmit={this.props.handleChange}>
                     <div><input name="search" placeholder="Search"></input></div>
-                    <div><button value="Submit">Search</button></div>
+                    <div><button onClick={this.props.onClick} value="Submit">Search</button></div>
                 </form>
             </div>
         )
