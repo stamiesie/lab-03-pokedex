@@ -13,6 +13,9 @@ export default class SearchPage extends Component {
         sortOrder: 'ascending',
         search: '',
         loading: false,
+        pokeCount: 0,
+        perPage: 25,
+        currentPage: 1
     }
     // on load, show all pokemon
     componentDidMount = async () => {
@@ -24,12 +27,13 @@ export default class SearchPage extends Component {
         // loading state set to true to turn on
         this.setState({ loading: true })
 
-        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.search}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}`);
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.search}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}&page=${this.state.currentPage}&perPage=${this.state.perPage}`);
 
         this.setState({
             // loading state set back to false to turn off
             loading: false,
-            pokemon: data.body.results
+            pokemon: data.body.results,
+            pokeCount: data.body.count,
         });
     }
 
@@ -65,7 +69,31 @@ export default class SearchPage extends Component {
         await this.fetchPokemon();
     }
 
+    handlePrevClick = async () => {
+        await this.setState({
+            currentPage: this.state.currentPage - 1
+        });
+        await this.fetchPokemon();
+    }
+
+    handleNextClick = async () => {
+        await this.setState({
+            currentPage: this.state.currentPage + 1
+        });
+        await this.fetchPokemon();
+    }
+
+    handleClick = async () => {
+        await this.setState({
+            currentPage: 1
+        });
+        await this.fetchPokemon();
+    }
+
+
     render() {
+
+        const lastPage = Math.ceil(this.state.pokeCount / this.state.perPage);
         // // sort
         // if (this.state.sortOrder === 'ascending') {
         //     this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
@@ -83,9 +111,13 @@ export default class SearchPage extends Component {
         return (
             <div className="search-page">
                 <div className="side-bar">
+                    <button onClick={this.handlePrevClick} disabled={this.state.currentPage === 1}>Prev</button>
+                    <p>Page {this.state.currentPage}</p>
+                    <button onClick={this.handleNextClick} disabled={this.state.currentPage === lastPage}>Next</button>
                     <div className="search-bar">
                         <p className="search-title">Search Pokemon by name:</p>
                         <SearchBar
+                            onClick={this.handleClick}
                             handleChange={this.handleSearchChange}
                             sortBy={this.state.sortBy}
                         />
